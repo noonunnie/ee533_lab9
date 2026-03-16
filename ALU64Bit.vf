@@ -1,0 +1,131 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2008 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 10.1
+//  \   \         Application : sch2verilog
+//  /   /         Filename : ALU64Bit.vf
+// /___/   /\     Timestamp : 03/16/2026 12:08:11
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: C:\Xilinx\10.1\ISE\bin\nt\unwrapped\sch2verilog.exe -intstyle ise -family virtex2p -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/ALU64Bit.sch" ALU64Bit.vf
+//Design Name: ALU64Bit
+//Device: virtex2p
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module ALU64Bit(a, 
+                b, 
+                cin, 
+                op, 
+                cout, 
+                e7, 
+                res);
+
+    input [63:0] a;
+    input [63:0] b;
+    input cin;
+    input [2:0] op;
+   output cout;
+   output e7;
+   output [63:0] res;
+   
+   wire Car0;
+   wire Car1;
+   wire Car2;
+   wire Car3;
+   wire Car4;
+   wire Car5;
+   wire Car6;
+   wire eo0;
+   wire e0;
+   wire e1;
+   wire e2;
+   wire e3;
+   wire e4;
+   wire e5;
+   wire e6;
+   wire XLXN_341;
+   wire XLXN_342;
+   
+   ALU8Bit XLXI_1 (.a(a[7:0]), 
+                   .b(b[7:0]), 
+                   .cin(cin), 
+                   .Ei(XLXN_342), 
+                   .Gi(XLXN_341), 
+                   .op(op[2:0]), 
+                   .cout(Car0), 
+                   .eo(eo0), 
+                   .res(res[7:0]));
+   ALU8Bit XLXI_2 (.a(a[15:8]), 
+                   .b(b[15:8]), 
+                   .cin(Car0), 
+                   .Ei(e0), 
+                   .Gi(Car0), 
+                   .op(op[2:0]), 
+                   .cout(Car2), 
+                   .eo(e1), 
+                   .res(res[15:8]));
+   ALU8Bit XLXI_3 (.a(a[23:16]), 
+                   .b(b[23:16]), 
+                   .cin(Car1), 
+                   .Ei(e1), 
+                   .Gi(Car1), 
+                   .op(op[2:0]), 
+                   .cout(Car2), 
+                   .eo(e2), 
+                   .res(res[23:16]));
+   ALU8Bit XLXI_4 (.a(a[31:24]), 
+                   .b(b[31:24]), 
+                   .cin(Car2), 
+                   .Ei(e2), 
+                   .Gi(Car2), 
+                   .op(op[2:0]), 
+                   .cout(Car3), 
+                   .eo(e3), 
+                   .res(res[31:24]));
+   ALU8Bit XLXI_5 (.a(a[39:32]), 
+                   .b(b[39:32]), 
+                   .cin(Car3), 
+                   .Ei(e3), 
+                   .Gi(Car3), 
+                   .op(op[2:0]), 
+                   .cout(Car4), 
+                   .eo(e4), 
+                   .res(res[39:32]));
+   ALU8Bit XLXI_6 (.a(a[47:40]), 
+                   .b(b[47:40]), 
+                   .cin(Car4), 
+                   .Ei(e4), 
+                   .Gi(Car4), 
+                   .op(op[2:0]), 
+                   .cout(Car5), 
+                   .eo(e5), 
+                   .res(res[47:40]));
+   ALU8Bit XLXI_7 (.a(a[55:48]), 
+                   .b(b[55:48]), 
+                   .cin(Car5), 
+                   .Ei(e5), 
+                   .Gi(Car5), 
+                   .op(op[2:0]), 
+                   .cout(Car6), 
+                   .eo(e6), 
+                   .res(res[55:48]));
+   ALU8Bit XLXI_8 (.a(a[63:56]), 
+                   .b(b[63:56]), 
+                   .cin(Car6), 
+                   .Ei(e6), 
+                   .Gi(Car6), 
+                   .op(op[2:0]), 
+                   .cout(cout), 
+                   .eo(e7), 
+                   .res(res[63:56]));
+   GND XLXI_9 (.G(XLXN_341));
+   VCC XLXI_10 (.P(XLXN_342));
+endmodule

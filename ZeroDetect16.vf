@@ -1,0 +1,163 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2008 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 10.1
+//  \   \         Application : sch2verilog
+//  /   /         Filename : ZeroDetect16.vf
+// /___/   /\     Timestamp : 03/16/2026 12:08:15
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: C:\Xilinx\10.1\ISE\bin\nt\unwrapped\sch2verilog.exe -intstyle ise -family virtex2p -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/ZeroDetect16.sch" ZeroDetect16.vf
+//Design Name: ZeroDetect16
+//Device: virtex2p
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module OR16_MXILINX_ZeroDetect16(I0, 
+                                 I1, 
+                                 I2, 
+                                 I3, 
+                                 I4, 
+                                 I5, 
+                                 I6, 
+                                 I7, 
+                                 I8, 
+                                 I9, 
+                                 I10, 
+                                 I11, 
+                                 I12, 
+                                 I13, 
+                                 I14, 
+                                 I15, 
+                                 O);
+
+    input I0;
+    input I1;
+    input I2;
+    input I3;
+    input I4;
+    input I5;
+    input I6;
+    input I7;
+    input I8;
+    input I9;
+    input I10;
+    input I11;
+    input I12;
+    input I13;
+    input I14;
+    input I15;
+   output O;
+   
+   wire CIN;
+   wire C0;
+   wire C1;
+   wire C2;
+   wire S0;
+   wire S1;
+   wire S2;
+   wire S3;
+   wire XLXN_46;
+   
+   MUXCY_L I_36_2 (.CI(CIN), 
+                   .DI(XLXN_46), 
+                   .S(S0), 
+                   .LO(C0));
+   // synthesis attribute RLOC of I_36_2 is "X0Y0"
+   FMAP I_36_29 (.I1(I0), 
+                 .I2(I1), 
+                 .I3(I2), 
+                 .I4(I3), 
+                 .O(S0));
+   // synthesis attribute RLOC of I_36_29 is "X0Y0"
+   NOR4 I_36_110 (.I0(I0), 
+                  .I1(I1), 
+                  .I2(I2), 
+                  .I3(I3), 
+                  .O(S0));
+   NOR4 I_36_127 (.I0(I4), 
+                  .I1(I5), 
+                  .I2(I6), 
+                  .I3(I7), 
+                  .O(S1));
+   MUXCY_L I_36_129 (.CI(C0), 
+                     .DI(XLXN_46), 
+                     .S(S1), 
+                     .LO(C1));
+   // synthesis attribute RLOC of I_36_129 is "X0Y0"
+   FMAP I_36_138 (.I1(I4), 
+                  .I2(I5), 
+                  .I3(I6), 
+                  .I4(I7), 
+                  .O(S1));
+   // synthesis attribute RLOC of I_36_138 is "X0Y0"
+   FMAP I_36_142 (.I1(I8), 
+                  .I2(I9), 
+                  .I3(I10), 
+                  .I4(I11), 
+                  .O(S2));
+   // synthesis attribute RLOC of I_36_142 is "X0Y1"
+   MUXCY_L I_36_147 (.CI(C1), 
+                     .DI(XLXN_46), 
+                     .S(S2), 
+                     .LO(C2));
+   // synthesis attribute RLOC of I_36_147 is "X0Y1"
+   NOR4 I_36_151 (.I0(I8), 
+                  .I1(I9), 
+                  .I2(I10), 
+                  .I3(I11), 
+                  .O(S2));
+   NOR4 I_36_161 (.I0(I12), 
+                  .I1(I13), 
+                  .I2(I14), 
+                  .I3(I15), 
+                  .O(S3));
+   MUXCY I_36_165 (.CI(C2), 
+                   .DI(XLXN_46), 
+                   .S(S3), 
+                   .O(O));
+   // synthesis attribute RLOC of I_36_165 is "X0Y1"
+   FMAP I_36_170 (.I1(I12), 
+                  .I2(I13), 
+                  .I3(I14), 
+                  .I4(I15), 
+                  .O(S3));
+   // synthesis attribute RLOC of I_36_170 is "X0Y1"
+   VCC I_36_172 (.P(XLXN_46));
+   GND I_36_174 (.G(CIN));
+endmodule
+`timescale 1ns / 1ps
+
+module ZeroDetect16(din, 
+                    dout);
+
+    input [15:0] din;
+   output dout;
+   
+   
+   OR16_MXILINX_ZeroDetect16 XLXI_1 (.I0(din[0]), 
+                                     .I1(din[1]), 
+                                     .I2(din[2]), 
+                                     .I3(din[3]), 
+                                     .I4(din[4]), 
+                                     .I5(din[5]), 
+                                     .I6(din[6]), 
+                                     .I7(din[7]), 
+                                     .I8(din[8]), 
+                                     .I9(din[9]), 
+                                     .I10(din[10]), 
+                                     .I11(din[11]), 
+                                     .I12(din[12]), 
+                                     .I13(din[13]), 
+                                     .I14(din[14]), 
+                                     .I15(din[15]), 
+                                     .O());
+   // synthesis attribute HU_SET of XLXI_1 is "XLXI_1_0"
+endmodule

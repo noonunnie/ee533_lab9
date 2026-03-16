@@ -1,0 +1,12 @@
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/EE533Lab5-main/PipelinedDatapath/ALU64Bit.sch" ALU64Bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/EE533Lab5-main/PipelinedDatapath/ALU64Bit.sch" ALU64Bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/EE533Lab5-main/PipelinedDatapath/ALU64Bit.sch" ALU64Bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/EE533Lab5-main/PipelinedDatapath/ALU64Bit.sch" ALU64Bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/EE533Lab5-main/PipelinedDatapath/ALU64Bit.sch" ALU64Bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/EE533Lab5-main/PipelinedDatapath/ALU64Bit.sch" ALU64Bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/EE533Lab5-main/PipelinedDatapath/ALU64Bit.sch" ALU64Bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/SharedXM/EE533Lab5/PipelinedDatapath/ALU64Bit.sch" ALU64Bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/VM_shared_folder/EE533Lab6/PipelinedDatapath/ALU64Bit.sch" ALU64Bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/VM_shared_folder/EE533Lab6/PipelinedDatapath/ALU64Bit.sch" ALU64Bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/ALU64Bit.sch" ALU64Bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/ALU64Bit.sch" ALU64Bit.vf

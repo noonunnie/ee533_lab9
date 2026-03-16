@@ -1,0 +1,3 @@
+MODULE big_data_mem_tb
+SUBMODULE big_data_mem
+INSTANCE UUT

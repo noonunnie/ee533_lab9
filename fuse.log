@@ -1,0 +1,10 @@
+Determining compilation order of HDL files
+Analyzing Verilog file ZeroDetect64.v
+WARNING:HDLCompiler:224 - "ZeroDetect64.v" Line 26. Assignment to input out
+ERROR:HDLCompiler:698 - "ZeroDetect64.v" Line 26. Part-select of memory in is
+   not allowed
+ERROR:HDLCompiler:971 - "ZeroDetect64.v" Line 26. Illegal operand for operator
+   ==
+ERROR:HDLCompiler:598 - "ZeroDetect64.v" Line 21. Module ZeroDetect64 ignored
+   due to previous errors
+Verilog file ZeroDetect64.v ignored due to errors

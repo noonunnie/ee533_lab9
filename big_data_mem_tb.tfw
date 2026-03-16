@@ -1,0 +1,94 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2003 Xilinx, Inc.
+// All Right Reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 10.1
+//  \   \         Application : ISE
+//  /   /         Filename : big_data_mem_tb.tfw
+// /___/   /\     Timestamp : Mon Mar 16 00:31:53 2026
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: 
+//Design Name: big_data_mem_tb
+//Device: Xilinx
+//
+`timescale 1ns/1ps
+
+module big_data_mem_tb;
+    reg [5:0] addra = 6'b000000;
+    reg [63:0] dina = 64'b0000000000000000000000000000000000000000000000000000000000000000;
+    reg wea = 1'b0;
+    reg ena = 1'b0;
+    reg clka = 1'b0;
+    wire [63:0] douta;
+    reg [5:0] addrb = 6'b000000;
+    reg [63:0] dinb = 64'b0000000000000000000000000000000000000000000000000000000000000000;
+    reg web = 1'b0;
+    reg enb = 1'b0;
+    reg clkb = 1'b0;
+    wire [63:0] doutb;
+
+    parameter PERIOD = 200;
+    parameter real DUTY_CYCLE = 0.5;
+    parameter OFFSET = 100;
+
+    initial    // Clock process for clka
+    begin
+        #OFFSET;
+        forever
+        begin
+            clka = 1'b0;
+            #(PERIOD-(PERIOD*DUTY_CYCLE)) clka = 1'b1;
+            #(PERIOD*DUTY_CYCLE);
+        end
+    end
+
+    big_data_mem UUT (
+        .addra(addra),
+        .dina(dina),
+        .wea(wea),
+        .ena(ena),
+        .clka(clka),
+        .douta(douta),
+        .addrb(addrb),
+        .dinb(dinb),
+        .web(web),
+        .enb(enb),
+        .clkb(clkb),
+        .doutb(doutb));
+
+    initial begin
+        // -------------  Current Time:  100ns
+        #100;
+        dina = 64'b0000000000000000000000000000000000000000000000000000000000000001;
+        // -------------------------------------
+        // -------------  Current Time:  185ns
+        #85;
+        wea = 1'b1;
+        ena = 1'b1;
+        addra = 6'b000001;
+        // -------------------------------------
+        // -------------  Current Time:  385ns
+        #200;
+        wea = 1'b0;
+        addra = 6'b000010;
+        dina = 64'b0000000000000000000000000000000000000000000000000000000000000010;
+        // -------------------------------------
+        // -------------  Current Time:  585ns
+        #200;
+        wea = 1'b1;
+        addra = 6'b000011;
+        dina = 64'b0000000000000000000000000000000000000000000000000000000000000011;
+        // -------------------------------------
+        // -------------  Current Time:  785ns
+        #200;
+        wea = 1'b0;
+        // -------------------------------------
+    end
+
+endmodule
+

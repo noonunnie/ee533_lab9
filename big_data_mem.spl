@@ -1,0 +1,19 @@
+[Inputs]
+wea
+ena
+clka
+gpu_mem_read_in
+gpu_mem_write_in
+clkb
+=addra[5:0]=
+=dina[63:0]=
+=gpu_alu_result_in[63:0]=
+=gpu_rs2_data_in[63:0]=
+[Outputs]
+=douta[63:0]=
+=gpu_mem_read_data[63:0]=
+=gpu_addr_out[11:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel big_data_mem
+

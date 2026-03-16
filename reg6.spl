@@ -1,0 +1,9 @@
+[Inputs]
+clk
+=data_in[5:0]=
+[Outputs]
+=data_out[5:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel reg6
+

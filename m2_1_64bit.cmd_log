@@ -1,0 +1,9 @@
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/VM_shared_folder/EE533Lab6/PipelinedDatapath/m2_1_64bit.sch" m2_1_64bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/VM_shared_folder/EE533Lab6/PipelinedDatapath/m2_1_64bit.sch" m2_1_64bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/m2_1_64bit.sch" m2_1_64bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/m2_1_64bit.sch" m2_1_64bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/m2_1_64bit.sch" m2_1_64bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/m2_1_64bit.sch" m2_1_64bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/m2_1_64bit.sch" m2_1_64bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/m2_1_64bit.sch" m2_1_64bit.vf
+sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/m2_1_64bit.sch" m2_1_64bit.vf
