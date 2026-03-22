@@ -7,11 +7,11 @@
 // \   \   \/     Version : 10.1
 //  \   \         Application : sch2verilog
 //  /   /         Filename : ALU64Bit.vf
-// /___/   /\     Timestamp : 03/16/2026 12:08:11
+// /___/   /\     Timestamp : 03/21/2026 12:46:47
 // \   \  /  \ 
 //  \___\/\___\ 
 //
-//Command: C:\Xilinx\10.1\ISE\bin\nt\unwrapped\sch2verilog.exe -intstyle ise -family virtex2p -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/ALU64Bit.sch" ALU64Bit.vf
+//Command: C:\Xilinx\10.1\ISE\bin\nt\unwrapped\sch2verilog.exe -intstyle ise -family virtex2p -w Z:/shared/SharedProjects/ee533_lab9/ALU64Bit.sch ALU64Bit.vf
 //Design Name: ALU64Bit
 //Device: virtex2p
 //Purpose:
@@ -69,7 +69,7 @@ module ALU64Bit(a,
                    .Ei(e0), 
                    .Gi(Car0), 
                    .op(op[2:0]), 
-                   .cout(Car2), 
+                   .cout(Car1), 
                    .eo(e1), 
                    .res(res[15:8]));
    ALU8Bit XLXI_3 (.a(a[23:16]), 

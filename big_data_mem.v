@@ -89,8 +89,6 @@ module big_data_mem(
     wire [11:0] gpu_bram_addr = gpu_alu_result_in[11:0]; 
     wire gpu_bram_en = gpu_mem_read_in | gpu_mem_write_in;
     wire gpu_bram_we = gpu_mem_write_in;
-
-    end
     
 	always @(posedge clkb) begin
         if (gpu_bram_en) begin

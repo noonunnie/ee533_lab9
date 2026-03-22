@@ -165,7 +165,7 @@ BEGIN SCHEMATIC
             PIN b(7:0) b(15:8)
             PIN cin Car0
             PIN res(7:0) res(15:8)
-            PIN cout Car2
+            PIN cout Car1
             PIN eo e1
             PIN Gi Car0
             PIN Ei e0
@@ -478,12 +478,6 @@ BEGIN SCHEMATIC
                 ALIGNMENT SOFT-RIGHT
             END DISPLAY
         END BRANCH
-        BEGIN BRANCH Car2
-            WIRE 1680 2192 1728 2192
-            BEGIN DISPLAY 1728 2192 ATTR Name
-                ALIGNMENT SOFT-LEFT
-            END DISPLAY
-        END BRANCH
         BEGIN BRANCH Car0
             WIRE 1264 2336 1280 2336
             WIRE 1280 2336 1280 2368
@@ -604,5 +598,11 @@ BEGIN SCHEMATIC
             WIRE 592 2560 608 2560
         END BRANCH
         IOMARKER 256 2384 cin R180 28
+        BEGIN BRANCH Car1
+            WIRE 1680 2192 1728 2192
+            BEGIN DISPLAY 1728 2192 ATTR Name
+                ALIGNMENT SOFT-LEFT
+            END DISPLAY
+        END BRANCH
     END SHEET
 END SCHEMATIC

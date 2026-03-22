@@ -39,3 +39,7 @@ sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/stude
 sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/PipelinedDatapath.sch" PipelinedDatapath.vf
 sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/PipelinedDatapath.sch" PipelinedDatapath.vf
 sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/PipelinedDatapath.sch" PipelinedDatapath.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/PipelinedDatapath.sch" PipelinedDatapath.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/PipelinedDatapath.sch" PipelinedDatapath.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/PipelinedDatapath.sch" PipelinedDatapath.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/PipelinedDatapath.sch" PipelinedDatapath.vf
