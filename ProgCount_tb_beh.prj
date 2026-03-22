@@ -1,0 +1,8 @@
+verilog work "ALU1Bit.vf"
+verilog work "ALU8Bit.vf"
+verilog work "reg64.v"
+verilog work "m2_1_64b.v"
+verilog work "ALU64Bit.vf"
+verilog work "ProgCount.vf"
+verilog work "ProgCount_tb.tfw"
+verilog work "C:/Xilinx/10.1/ISE/verilog/src/glbl.v"

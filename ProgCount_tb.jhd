@@ -1,0 +1,3 @@
+MODULE ProgCount_tb
+SUBMODULE ProgCount
+INSTANCE UUT

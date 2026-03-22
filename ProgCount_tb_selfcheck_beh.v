@@ -1,0 +1,101 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2003 Xilinx, Inc.
+// All Right Reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 10.1
+//  \   \         Application : ISE
+//  /   /         Filename : ProgCount_tb_selfcheck.tfw
+// /___/   /\     Timestamp : Sat Mar 21 13:36:26 2026
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: 
+//Design Name: ProgCount_tb_selfcheck_beh
+//Device: Xilinx
+//
+`timescale 1ns/1ps
+
+module ProgCount_tb_selfcheck_beh;
+    reg clk = 1'b0;
+    reg rst = 1'b0;
+    wire [63:0] ProgCounter;
+
+    parameter PERIOD = 200;
+    parameter real DUTY_CYCLE = 0.5;
+    parameter OFFSET = 0;
+
+    initial    // Clock process for clk
+    begin
+        #OFFSET;
+        forever
+        begin
+            clk = 1'b0;
+            #(PERIOD-(PERIOD*DUTY_CYCLE)) clk = 1'b1;
+            #(PERIOD*DUTY_CYCLE);
+        end
+    end
+
+    ProgCount UUT (
+        .clk(clk),
+        .rst(rst),
+        .ProgCounter(ProgCounter));
+
+    integer TX_ERROR = 0;
+    
+    initial begin  // Open the results file...
+        #1200 // Final time:  1200 ns
+        if (TX_ERROR == 0) begin
+            $display("No errors or warnings.");
+        end else begin
+            $display("%d errors found in simulation.", TX_ERROR);
+        end
+        $stop;
+    end
+
+    initial begin
+        // -------------  Current Time:  95ns
+        #95;
+        rst = 1'b1;
+        // -------------------------------------
+        // -------------  Current Time:  105ns
+        #10;
+        CHECK_ProgCounter(64'b0000000000000000000000000000000000000000000000000000000000000000);
+        // -------------------------------------
+        // -------------  Current Time:  295ns
+        #190;
+        rst = 1'b0;
+        // -------------------------------------
+        // -------------  Current Time:  305ns
+        #10;
+        CHECK_ProgCounter(64'b0000000000000000000000000000000000000000000000000000000000000100);
+        // -------------------------------------
+        // -------------  Current Time:  505ns
+        #200;
+        CHECK_ProgCounter(64'b0000000000000000000000000000000000000000000000000000000000001000);
+        // -------------------------------------
+        // -------------  Current Time:  705ns
+        #200;
+        CHECK_ProgCounter(64'b0000000000000000000000000000000000000000000000000000000000001100);
+        // -------------------------------------
+        // -------------  Current Time:  905ns
+        #200;
+        CHECK_ProgCounter(64'b0000000000000000000000000000000000000000000000000000000000010000);
+        // -------------------------------------
+    end
+
+    task CHECK_ProgCounter;
+        input [63:0] NEXT_ProgCounter;
+
+        #0 begin
+            if (NEXT_ProgCounter !== ProgCounter) begin
+                $display("Error at time=%dns ProgCounter=%b, expected=%b", $time, ProgCounter, NEXT_ProgCounter);
+                TX_ERROR = TX_ERROR + 1;
+            end
+        end
+    endtask
+
+endmodule
+
