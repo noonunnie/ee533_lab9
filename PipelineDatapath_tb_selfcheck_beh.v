@@ -1,0 +1,105 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2003 Xilinx, Inc.
+// All Right Reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 10.1
+//  \   \         Application : ISE
+//  /   /         Filename : PipelineDatapath_tb_selfcheck.tfw
+// /___/   /\     Timestamp : Sun Mar 22 17:20:26 2026
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: 
+//Design Name: PipelineDatapath_tb_selfcheck_beh
+//Device: Xilinx
+//
+`timescale 1ns/1ps
+
+module PipelineDatapath_tb_selfcheck_beh;
+    reg clk = 1'b0;
+    reg [63:0] gpu_alu_result_in = 64'b0000000000000000000000000000000000000000000000000000000000000000;
+    reg gpu_mem_read_in = 1'b0;
+    reg gpu_mem_write_in = 1'b0;
+    reg [63:0] gpu_rs2_data_in = 64'b0000000000000000000000000000000000000000000000000000000000000000;
+    reg [31:0] InstData = 32'b00000000000000000000000000000000;
+    reg rst = 1'b0;
+    reg wea = 1'b0;
+    wire [11:0] gpu_addr_out;
+    wire [63:0] gpu_mem_read_data;
+
+    parameter PERIOD = 200;
+    parameter real DUTY_CYCLE = 0.5;
+    parameter OFFSET = 0;
+
+    initial    // Clock process for clk
+    begin
+        #OFFSET;
+        forever
+        begin
+            clk = 1'b0;
+            #(PERIOD-(PERIOD*DUTY_CYCLE)) clk = 1'b1;
+            #(PERIOD*DUTY_CYCLE);
+        end
+    end
+
+    PipelinedDatapath UUT (
+        .clk(clk),
+        .gpu_alu_result_in(gpu_alu_result_in),
+        .gpu_mem_read_in(gpu_mem_read_in),
+        .gpu_mem_write_in(gpu_mem_write_in),
+        .gpu_rs2_data_in(gpu_rs2_data_in),
+        .InstData(InstData),
+        .rst(rst),
+        .wea(wea),
+        .gpu_addr_out(gpu_addr_out),
+        .gpu_mem_read_data(gpu_mem_read_data));
+
+    integer TX_ERROR = 0;
+    
+    initial begin  // Open the results file...
+        #1200 // Final time:  1200 ns
+        if (TX_ERROR == 0) begin
+            $display("No errors or warnings.");
+        end else begin
+            $display("%d errors found in simulation.", TX_ERROR);
+        end
+        $stop;
+    end
+
+    initial begin
+        // -------------  Current Time:  95ns
+        #95;
+        rst = 1'b1;
+        // -------------------------------------
+        // -------------  Current Time:  295ns
+        #200;
+        rst = 1'b0;
+        // -------------------------------------
+    end
+
+    task CHECK_gpu_addr_out;
+        input [11:0] NEXT_gpu_addr_out;
+
+        #0 begin
+            if (NEXT_gpu_addr_out !== gpu_addr_out) begin
+                $display("Error at time=%dns gpu_addr_out=%b, expected=%b", $time, gpu_addr_out, NEXT_gpu_addr_out);
+                TX_ERROR = TX_ERROR + 1;
+            end
+        end
+    endtask
+    task CHECK_gpu_mem_read_data;
+        input [63:0] NEXT_gpu_mem_read_data;
+
+        #0 begin
+            if (NEXT_gpu_mem_read_data !== gpu_mem_read_data) begin
+                $display("Error at time=%dns gpu_mem_read_data=%b, expected=%b", $time, gpu_mem_read_data, NEXT_gpu_mem_read_data);
+                TX_ERROR = TX_ERROR + 1;
+            end
+        end
+    endtask
+
+endmodule
+

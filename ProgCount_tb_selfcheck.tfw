@@ -8,7 +8,7 @@
 // \   \   \/     Version : 10.1
 //  \   \         Application : ISE
 //  /   /         Filename : ProgCount_tb_selfcheck.tfw
-// /___/   /\     Timestamp : Sat Mar 21 13:36:26 2026
+// /___/   /\     Timestamp : Sun Mar 22 13:59:29 2026
 // \   \  /  \ 
 //  \___\/\___\ 
 //
@@ -19,6 +19,8 @@
 `timescale 1ns/1ps
 
 module ProgCount_tb_selfcheck;
+    reg Br = 1'b0;
+    reg [63:0] BrAddr = 64'b0000000000000000000000000000000000000000000000000000000000000000;
     reg clk = 1'b0;
     reg rst = 1'b0;
     wire [63:0] ProgCounter;
@@ -39,6 +41,8 @@ module ProgCount_tb_selfcheck;
     end
 
     ProgCount UUT (
+        .Br(Br),
+        .BrAddr(BrAddr),
         .clk(clk),
         .rst(rst),
         .ProgCounter(ProgCounter));

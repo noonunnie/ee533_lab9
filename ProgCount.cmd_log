@@ -25,3 +25,6 @@ sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_
 sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ProgCount.sch" ProgCount.vf
 sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ProgCount.sch" ProgCount.vf
 sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ProgCount.sch" ProgCount.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ProgCount.sch" ProgCount.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ProgCount.sch" ProgCount.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ProgCount.sch" ProgCount.vf

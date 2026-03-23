@@ -7,8 +7,8 @@
 // /___/  \  /    Vendor: Xilinx 
 // \   \   \/     Version : 10.1
 //  \   \         Application : ISE
-//  /   /         Filename : ProgCount_tb.tfw
-// /___/   /\     Timestamp : Sat Mar 21 13:30:35 2026
+//  /   /         Filename : ProgCount_tb.ant
+// /___/   /\     Timestamp : Sun Mar 22 13:58:43 2026
 // \   \  /  \ 
 //  \___\/\___\ 
 //
@@ -19,6 +19,8 @@
 `timescale 1ns/1ps
 
 module ProgCount_tb;
+    reg Br = 1'b0;
+    reg [63:0] BrAddr = 64'b0000000000000000000000000000000000000000000000000000000000000000;
     reg clk = 1'b0;
     reg rst = 1'b0;
     wire [63:0] ProgCounter;
@@ -39,9 +41,34 @@ module ProgCount_tb;
     end
 
     ProgCount UUT (
+        .Br(Br),
+        .BrAddr(BrAddr),
         .clk(clk),
         .rst(rst),
         .ProgCounter(ProgCounter));
+
+    integer TX_FILE = 0;
+    integer TX_ERROR = 0;
+    
+    initial begin    // Annotation process for clock clk
+        #0;
+        ANNOTATE_ProgCounter;
+        #OFFSET;
+        forever begin
+            #105;
+            ANNOTATE_ProgCounter;
+            #95;
+        end
+    end
+
+    initial begin  // Open the annotations file...
+        TX_FILE = $fopen("\\\\vmware-host\\shared folders\\shared\\SharedProjects\\ee533_lab9\\ProgCount_tb.ano");
+        #1200 // Final time:  1200 ns
+        $display("Success! Annotation Simulation Complete.");
+        $fdisplay(TX_FILE, "Total[%d]", TX_ERROR);
+        $fclose(TX_FILE);
+        $finish;
+    end
 
     initial begin
         // -------------  Current Time:  95ns
@@ -53,6 +80,14 @@ module ProgCount_tb;
         rst = 1'b0;
         // -------------------------------------
     end
+
+    task ANNOTATE_ProgCounter;
+        #0 begin
+            $fdisplay(TX_FILE, "Annotate[%d,ProgCounter,%b]", $time, ProgCounter);
+            $fflush(TX_FILE);
+            TX_ERROR = TX_ERROR + 1;
+        end
+    endtask
 
 endmodule
 

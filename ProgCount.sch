@@ -14,18 +14,11 @@ BEGIN SCHEMATIC
         SIGNAL XLXN_14(63:0)
         SIGNAL ALURes(63:0)
         SIGNAL clk
-        SIGNAL XLXN_44(63:0)
         SIGNAL rst
         SIGNAL XLXN_47
-        SIGNAL XLXN_48
-        SIGNAL XLXN_51
-        SIGNAL XLXN_52(63:0)
         SIGNAL Br
         SIGNAL BrAddr(63:0)
         SIGNAL XLXN_55(63:0)
-        SIGNAL XLXN_57(63:0)
-        SIGNAL XLXN_58
-        SIGNAL XLXN_59(63:0)
         PORT Output ProgCounter(63:0)
         PORT Input clk
         PORT Input rst

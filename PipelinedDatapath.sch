@@ -16,14 +16,12 @@ BEGIN SCHEMATIC
         SIGNAL XLXN_45(1:0)
         SIGNAL InstIF(31:0)
         SIGNAL wea
-        SIGNAL InstAddr(7:0)
         SIGNAL InstData(31:0)
         SIGNAL InstID(31:0)
         SIGNAL XLXN_7
         SIGNAL InstID(30)
         SIGNAL InstID(31)
         SIGNAL XLXN_82(63:0)
-        SIGNAL XLXN_89
         SIGNAL RegData1(63:0)
         SIGNAL WBWADDR(1:0)
         SIGNAL InstID(5:0)
@@ -44,7 +42,6 @@ BEGIN SCHEMATIC
         SIGNAL XLXN_190(63:0)
         SIGNAL XLXN_192
         SIGNAL XLXN_201
-        SIGNAL InstAddr(63:0)
         SIGNAL XLXN_221(63:0)
         SIGNAL XLXN_222(63:0)
         SIGNAL XLXN_223
@@ -56,12 +53,28 @@ BEGIN SCHEMATIC
         SIGNAL XLXN_50(63:0)
         SIGNAL XLXN_250
         SIGNAL rst
-        SIGNAL XLXN_252
-        SIGNAL XLXN_255(63:0)
+        SIGNAL PC(63:0)
+        SIGNAL PC(7:0)
+        SIGNAL gpu_mem_read_in
+        SIGNAL gpu_mem_write_in
+        SIGNAL gpu_alu_result_in(63:0)
+        SIGNAL gpu_rs2_data_in(63:0)
+        SIGNAL gpu_mem_read_data(63:0)
+        SIGNAL gpu_addr_out(11:0)
+        SIGNAL XLXN_265
+        SIGNAL XLXN_267
+        SIGNAL branch
+        SIGNAL XLXN_269
         PORT Input clk
         PORT Input wea
         PORT Input InstData(31:0)
         PORT Input rst
+        PORT Input gpu_mem_read_in
+        PORT Input gpu_mem_write_in
+        PORT Input gpu_alu_result_in(63:0)
+        PORT Input gpu_rs2_data_in(63:0)
+        PORT Output gpu_mem_read_data(63:0)
+        PORT Output gpu_addr_out(11:0)
         BEGIN BLOCKDEF reg_file
             TIMESTAMP 2026 2 14 5 43 52
             LINE N 64 64 64 64 
@@ -249,7 +262,7 @@ BEGIN SCHEMATIC
             END LINE
         END BLOCKDEF
         BEGIN BLOCKDEF big_data_mem
-            TIMESTAMP 2026 3 16 20 9 37
+            TIMESTAMP 2026 3 22 22 10 1
             LINE N 64 32 0 32 
             LINE N 64 96 0 96 
             RECTANGLE N 0 148 64 172 
@@ -272,18 +285,42 @@ BEGIN SCHEMATIC
             LINE N 320 -608 384 -608 
             RECTANGLE N 64 -640 320 256 
         END BLOCKDEF
+        BEGIN BLOCKDEF constant
+            TIMESTAMP 2006 1 1 10 10 10
+            RECTANGLE N 0 0 112 64 
+            LINE N 144 32 112 32 
+        END BLOCKDEF
+        BEGIN BLOCKDEF and2
+            TIMESTAMP 2000 1 1 10 10 10
+            LINE N 0 -64 64 -64 
+            LINE N 0 -128 64 -128 
+            LINE N 256 -96 192 -96 
+            ARC N 96 -144 192 -48 144 -48 144 -144 
+            LINE N 144 -48 64 -48 
+            LINE N 64 -144 144 -144 
+            LINE N 64 -48 64 -144 
+        END BLOCKDEF
+        BEGIN BLOCKDEF gnd
+            TIMESTAMP 2000 1 1 10 10 10
+            LINE N 64 -64 64 -96 
+            LINE N 76 -48 52 -48 
+            LINE N 68 -32 60 -32 
+            LINE N 88 -64 40 -64 
+            LINE N 64 -64 64 -80 
+            LINE N 64 -128 64 -96 
+        END BLOCKDEF
         BEGIN BLOCK XLXI_40 IFIDReg
             PIN clk clk
             PIN Inst(31:0) InstIF(31:0)
             PIN PCIF(63:0) XLXN_82(63:0)
             PIN InstOut(31:0) InstID(31:0)
-            PIN PCID(63:0) InstAddr(63:0)
+            PIN PCID(63:0) PC(63:0)
         END BLOCK
         BEGIN BLOCK XLXI_44 ALU64Bit
             PIN op(2:0) ALUOP(2:0)
             PIN a(63:0) XLXN_5(63:0)
             PIN b(63:0) XLXN_244(63:0)
-            PIN cin
+            PIN cin XLXN_265
             PIN res(63:0) XLXN_190(63:0)
             PIN e7
             PIN cout
@@ -306,31 +343,6 @@ BEGIN SCHEMATIC
         BEGIN BLOCK XLXI_56 signExt
             PIN short(15:0) InstID(15:0)
             PIN long(31:0) XLXN_127(31:0)
-        END BLOCK
-        BEGIN BLOCK XLXI_58 IDEXReg
-            PIN clk clk
-            PIN WREG1I(1:0) InstID(29:28)
-            PIN WREG1O(1:0) XLXN_3(1:0)
-            PIN ALUCtrlEX(5:0) ALUOP(5:0)
-            PIN SignExtEX(31:0) ALUnoop(31:0)
-            PIN REG2O(63:0) XLXN_180(63:0)
-            PIN REG1O(63:0) XLXN_5(63:0)
-            PIN ALUCtrlID(5:0) InstID(5:0)
-            PIN SignExtID(31:0) XLXN_127(31:0)
-            PIN REG2I(63:0) XLXN_15(63:0)
-            PIN REG1I(63:0) XLXN_16(63:0)
-            PIN WMEO XLXN_7
-            PIN WREO XLXN_250
-            PIN PCO(63:0) XLXN_184(63:0)
-            PIN ZeroEX XLXN_89
-            PIN WMEI InstID(31)
-            PIN WREI InstID(30)
-            PIN PCI(63:0) XLXN_82(63:0)
-            PIN ZeroID XLXN_83
-            PIN ALUOpID
-            PIN ALUOpEX XLXN_201
-            PIN RTypeID
-            PIN RTypeEX XLXN_192
         END BLOCK
         BEGIN BLOCK XLXI_13 reg_file
             PIN wena XLXN_188
@@ -372,36 +384,77 @@ BEGIN SCHEMATIC
             PIN O(63:0) XLXN_244(63:0)
         END BLOCK
         BEGIN BLOCK XLXI_69 InstructionMem
-            PIN addr(7:0) InstAddr(7:0)
+            PIN addr(7:0) PC(7:0)
             PIN din(31:0) InstData(31:0)
             PIN we wea
             PIN clk clk
             PIN dout(31:0) InstIF(31:0)
         END BLOCK
-        BEGIN BLOCK XLXI_70 big_data_mem
-            PIN wea XLXN_233
-            PIN ena XLXN_65
-            PIN clka clk
-            PIN gpu_mem_read_in
-            PIN gpu_mem_write_in
-            PIN clkb clk
-            PIN addra(5:0) RegData(5:0)
-            PIN dina(63:0) XLXN_50(63:0)
-            PIN gpu_alu_result_in(63:0)
-            PIN gpu_rs2_data_in(63:0)
-            PIN douta(63:0) XLXN_245(63:0)
-            PIN gpu_mem_read_data(63:0)
-            PIN gpu_addr_out(11:0)
-        END BLOCK
         BEGIN BLOCK XLXI_66 vcc
             PIN P XLXN_65
         END BLOCK
         BEGIN BLOCK XLXI_39 ProgCount
-            PIN ProgCounter(63:0) InstAddr(63:0)
+            PIN ProgCounter(63:0) PC(63:0)
             PIN clk clk
             PIN rst rst
-            PIN Br XLXN_89
+            PIN Br branch
             PIN BrAddr(63:0) XLXN_184(63:0)
+        END BLOCK
+        BEGIN BLOCK XLXI_70 big_data_mem
+            PIN wea XLXN_233
+            PIN ena XLXN_65
+            PIN clka clk
+            PIN gpu_mem_read_in gpu_mem_read_in
+            PIN gpu_mem_write_in gpu_mem_write_in
+            PIN clkb clk
+            PIN addra(5:0) RegData(5:0)
+            PIN dina(63:0) XLXN_50(63:0)
+            PIN gpu_alu_result_in(63:0) gpu_alu_result_in(63:0)
+            PIN gpu_rs2_data_in(63:0) gpu_rs2_data_in(63:0)
+            PIN douta(63:0) XLXN_245(63:0)
+            PIN gpu_mem_read_data(63:0) gpu_mem_read_data(63:0)
+            PIN gpu_addr_out(11:0) gpu_addr_out(11:0)
+        END BLOCK
+        BEGIN BLOCK XLXI_71 IDEXReg
+            PIN clk clk
+            PIN WREG1I(1:0) InstID(29:28)
+            PIN WREG1O(1:0) XLXN_3(1:0)
+            PIN ALUCtrlEX(5:0) ALUOP(5:0)
+            PIN SignExtEX(31:0) ALUnoop(31:0)
+            PIN REG2O(63:0) XLXN_180(63:0)
+            PIN REG1O(63:0) XLXN_5(63:0)
+            PIN ALUCtrlID(5:0) InstID(5:0)
+            PIN SignExtID(31:0) XLXN_127(31:0)
+            PIN REG2I(63:0) XLXN_15(63:0)
+            PIN REG1I(63:0) XLXN_16(63:0)
+            PIN WMEO XLXN_7
+            PIN WREO XLXN_250
+            PIN PCO(63:0) XLXN_184(63:0)
+            PIN ZeroEX XLXN_267
+            PIN WMEI InstID(31)
+            PIN WREI InstID(30)
+            PIN PCI(63:0) XLXN_82(63:0)
+            PIN ZeroID XLXN_83
+            PIN ALUOpID XLXN_269
+            PIN ALUOpEX XLXN_201
+            PIN RTypeID XLXN_269
+            PIN RTypeEX XLXN_192
+        END BLOCK
+        BEGIN BLOCK XLXI_73 constant
+            BEGIN ATTR CValue "0"
+                DELETE all:1 sym:0
+                EDITNAME all:1 sch:0
+                VALUETYPE BitVector 32 Hexadecimal
+            END ATTR
+            PIN O XLXN_265
+        END BLOCK
+        BEGIN BLOCK XLXI_75 and2
+            PIN I0 XLXN_269
+            PIN I1 XLXN_267
+            PIN O branch
+        END BLOCK
+        BEGIN BLOCK XLXI_76 gnd
+            PIN G XLXN_269
         END BLOCK
     END NETLIST
     BEGIN SHEET 1 5440 3520
@@ -429,12 +482,6 @@ BEGIN SCHEMATIC
         END BRANCH
         BEGIN BRANCH wea
             WIRE 144 2368 304 2368
-        END BRANCH
-        BEGIN BRANCH InstAddr(7:0)
-            WIRE 160 2304 304 2304
-            BEGIN DISPLAY 160 2304 ATTR Name
-                ALIGNMENT SOFT-RIGHT
-            END DISPLAY
         END BRANCH
         IOMARKER 144 2368 wea R180 28
         BEGIN BRANCH InstData(31:0)
@@ -523,8 +570,6 @@ BEGIN SCHEMATIC
             WIRE 1984 1408 1984 1424
             WIRE 1984 1408 2288 1408
         END BRANCH
-        BEGIN INSTANCE XLXI_58 2208 688 R0
-        END INSTANCE
         BEGIN BRANCH ALUOP(5:0)
             WIRE 2608 2800 2640 2800
             BEGIN DISPLAY 2640 2800 ATTR Name
@@ -665,8 +710,6 @@ BEGIN SCHEMATIC
         END INSTANCE
         BEGIN INSTANCE XLXI_69 304 2256 R0
         END INSTANCE
-        BEGIN INSTANCE XLXI_70 4128 2512 R0
-        END INSTANCE
         BEGIN BRANCH XLXN_65
             WIRE 4064 1712 4064 1968
             WIRE 4064 1968 4128 1968
@@ -703,24 +746,8 @@ BEGIN SCHEMATIC
         BEGIN BRANCH rst
             WIRE 144 640 336 640
         END BRANCH
-        BEGIN BRANCH InstAddr(63:0)
-            WIRE 720 736 848 736
-            WIRE 848 528 864 528
-            WIRE 848 528 848 736
-            BEGIN DISPLAY 848 736 ATTR Name
-                ALIGNMENT SOFT-TCENTER
-                FONT 24 "Arial"
-            END DISPLAY
-        END BRANCH
         BEGIN INSTANCE XLXI_39 336 704 R0
         END INSTANCE
-        BEGIN BRANCH XLXN_89
-            WIRE 64 224 3024 224
-            WIRE 3024 224 3024 1408
-            WIRE 64 224 64 672
-            WIRE 64 672 336 672
-            WIRE 2608 1408 3024 1408
-        END BRANCH
         BEGIN BRANCH clk
             WIRE 144 3200 176 3200
             WIRE 176 3200 1008 3200
@@ -747,5 +774,94 @@ BEGIN SCHEMATIC
             WIRE 4784 3072 4784 3200
         END BRANCH
         IOMARKER 144 640 rst R180 28
+        BEGIN BRANCH PC(63:0)
+            WIRE 720 736 784 736
+            WIRE 784 528 784 736
+            WIRE 784 528 864 528
+            BEGIN DISPLAY 784 736 ATTR Name
+                ALIGNMENT SOFT-TCENTER
+            END DISPLAY
+        END BRANCH
+        BEGIN BRANCH PC(7:0)
+            WIRE 192 2304 304 2304
+            BEGIN DISPLAY 192 2304 ATTR Name
+                ALIGNMENT SOFT-RIGHT
+            END DISPLAY
+        END BRANCH
+        BEGIN INSTANCE XLXI_70 4128 2512 R0
+        END INSTANCE
+        BEGIN INSTANCE XLXI_71 2208 688 R0
+        END INSTANCE
+        BEGIN BRANCH gpu_mem_read_in
+            WIRE 3648 3264 3888 3264
+            WIRE 3888 2544 3888 3264
+            WIRE 3888 2544 4128 2544
+        END BRANCH
+        BEGIN BRANCH gpu_mem_write_in
+            WIRE 3648 3312 3872 3312
+            WIRE 3872 2608 3872 3312
+            WIRE 3872 2608 4128 2608
+        END BRANCH
+        BEGIN BRANCH gpu_alu_result_in(63:0)
+            WIRE 3648 3360 3856 3360
+            WIRE 3856 2672 3856 3360
+            WIRE 3856 2672 4128 2672
+        END BRANCH
+        BEGIN BRANCH gpu_rs2_data_in(63:0)
+            WIRE 3648 3408 3952 3408
+            WIRE 3952 2736 3952 3408
+            WIRE 3952 2736 4128 2736
+        END BRANCH
+        BEGIN BRANCH gpu_mem_read_data(63:0)
+            WIRE 4512 2544 4624 2544
+            WIRE 4624 2544 4624 3248
+            WIRE 4624 3248 4784 3248
+        END BRANCH
+        BEGIN BRANCH gpu_addr_out(11:0)
+            WIRE 4512 2608 4608 2608
+            WIRE 4608 2608 4608 3296
+            WIRE 4608 3296 4784 3296
+        END BRANCH
+        IOMARKER 3648 3264 gpu_mem_read_in R180 28
+        IOMARKER 3648 3312 gpu_mem_write_in R180 28
+        IOMARKER 3648 3360 gpu_alu_result_in(63:0) R180 28
+        IOMARKER 3648 3408 gpu_rs2_data_in(63:0) R180 28
+        IOMARKER 4784 3248 gpu_mem_read_data(63:0) R0 28
+        IOMARKER 4784 3296 gpu_addr_out(11:0) R0 28
+        BEGIN BRANCH XLXN_265
+            WIRE 3008 2736 3088 2736
+            WIRE 3008 2736 3008 3104
+        END BRANCH
+        BEGIN INSTANCE XLXI_73 2864 3072 R0
+        END INSTANCE
+        INSTANCE XLXI_75 2848 896 R0
+        BEGIN BRANCH XLXN_267
+            WIRE 2608 1408 2720 1408
+            WIRE 2720 768 2720 1408
+            WIRE 2720 768 2848 768
+        END BRANCH
+        BEGIN BRANCH branch
+            WIRE 256 256 256 672
+            WIRE 256 672 336 672
+            WIRE 256 256 3168 256
+            WIRE 3168 256 3168 800
+            WIRE 3104 800 3168 800
+        END BRANCH
+        BEGIN DISPLAY 2132 756 TEXT "Put through stage reg!"
+            FONT 24 "Arial"
+        END DISPLAY
+        BEGIN BRANCH XLXN_269
+            WIRE 1664 3344 2032 3344
+            WIRE 2032 832 2848 832
+            WIRE 2032 832 2032 1648
+            WIRE 2032 1648 2288 1648
+            WIRE 2032 1648 2032 1728
+            WIRE 2032 1728 2032 3344
+            WIRE 2032 1728 2288 1728
+        END BRANCH
+        INSTANCE XLXI_76 1600 3472 R0
+        BEGIN DISPLAY 1732 3432 TEXT "Placeholder control signal, make sure nothing is connected to this!"
+            FONT 24 "Arial"
+        END DISPLAY
     END SHEET
 END SCHEMATIC

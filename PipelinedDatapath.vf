@@ -7,7 +7,7 @@
 // \   \   \/     Version : 10.1
 //  \   \         Application : sch2verilog
 //  /   /         Filename : PipelinedDatapath.vf
-// /___/   /\     Timestamp : 03/21/2026 16:37:49
+// /___/   /\     Timestamp : 03/22/2026 17:21:37
 // \   \  /  \ 
 //  \___\/\___\ 
 //
@@ -21,21 +21,33 @@
 `timescale 1ns / 1ps
 
 module PipelinedDatapath(clk, 
+                         gpu_alu_result_in, 
+                         gpu_mem_read_in, 
+                         gpu_mem_write_in, 
+                         gpu_rs2_data_in, 
                          InstData, 
                          rst, 
-                         wea);
+                         wea, 
+                         gpu_addr_out, 
+                         gpu_mem_read_data);
 
     input clk;
+    input [63:0] gpu_alu_result_in;
+    input gpu_mem_read_in;
+    input gpu_mem_write_in;
+    input [63:0] gpu_rs2_data_in;
     input [31:0] InstData;
     input rst;
     input wea;
+   output [11:0] gpu_addr_out;
+   output [63:0] gpu_mem_read_data;
    
    wire [63:0] ALUnoop;
    wire [5:0] ALUOP;
-   wire [7:0] InstAddr;
+   wire branch;
    wire [31:0] InstID;
    wire [31:0] InstIF;
-   wire [63:0] PCMux0;
+   wire [63:0] PC;
    wire [5:0] RegData;
    wire [63:0] RegData1;
    wire [1:0] WBWADDR;
@@ -50,7 +62,6 @@ module PipelinedDatapath(clk,
    wire XLXN_65;
    wire [63:0] XLXN_82;
    wire XLXN_83;
-   wire XLXN_89;
    wire [31:0] XLXN_127;
    wire [63:0] XLXN_180;
    wire [63:0] XLXN_184;
@@ -60,7 +71,6 @@ module PipelinedDatapath(clk,
    wire [63:0] XLXN_190;
    wire XLXN_192;
    wire XLXN_201;
-   wire [63:0] XLXN_209;
    wire [63:0] XLXN_221;
    wire [63:0] XLXN_222;
    wire XLXN_223;
@@ -68,7 +78,11 @@ module PipelinedDatapath(clk,
    wire [63:0] XLXN_244;
    wire [63:0] XLXN_245;
    wire XLXN_250;
+   wire XLXN_265;
+   wire XLXN_267;
+   wire XLXN_269;
    
+   assign XLXN_265 = 1;
    reg_file XLXI_13 (.clk(clk), 
                      .r0addr(InstID[22:21]), 
                      .r1addr({InstID[15], InstID[16]}), 
@@ -77,17 +91,19 @@ module PipelinedDatapath(clk,
                      .wena(XLXN_188), 
                      .r0data(XLXN_16[63:0]), 
                      .r1data(XLXN_15[63:0]));
-   ProgCount XLXI_39 (.clk(clk), 
+   ProgCount XLXI_39 (.Br(branch), 
+                      .BrAddr(XLXN_184[63:0]), 
+                      .clk(clk), 
                       .rst(rst), 
-                      .ProgCounter(PCMux0[63:0]));
+                      .ProgCounter(PC[63:0]));
    IFIDReg XLXI_40 (.clk(clk), 
                     .Inst(InstIF[31:0]), 
                     .PCIF(XLXN_82[63:0]), 
                     .InstOut(InstID[31:0]), 
-                    .PCID(XLXN_209[63:0]));
+                    .PCID(PC[63:0]));
    ALU64Bit XLXI_44 (.a(XLXN_5[63:0]), 
                      .b(XLXN_244[63:0]), 
-                     .cin(), 
+                     .cin(XLXN_265), 
                      .op(ALUOP[2:0]), 
                      .cout(), 
                      .e7(), 
@@ -107,29 +123,6 @@ module PipelinedDatapath(clk,
                      .WREO(XLXN_43));
    signExt XLXI_56 (.short(InstID[15:0]), 
                     .long(XLXN_127[31:0]));
-   IDEXReg XLXI_58 (.ALUCtrlID(InstID[5:0]), 
-                    .ALUOpEX(XLXN_201), 
-                    .ALUOpID(), 
-                    .clk(clk), 
-                    .PCI(XLXN_82[63:0]), 
-                    .REG1I(XLXN_16[63:0]), 
-                    .REG2I(XLXN_15[63:0]), 
-                    .RTypeEX(XLXN_192), 
-                    .RTypeID(), 
-                    .SignExtID(XLXN_127[31:0]), 
-                    .WMEI(InstID[31]), 
-                    .WREG1I(InstID[29:28]), 
-                    .WREI(InstID[30]), 
-                    .ZeroID(XLXN_83), 
-                    .ALUCtrlEX(ALUOP[5:0]), 
-                    .PCO(XLXN_184[63:0]), 
-                    .REG1O(XLXN_5[63:0]), 
-                    .REG2O(XLXN_180[63:0]), 
-                    .SignExtEX(ALUnoop[31:0]), 
-                    .WMEO(XLXN_7), 
-                    .WREG1O(XLXN_3[1:0]), 
-                    .WREO(XLXN_250), 
-                    .ZeroEX(XLXN_89));
    MEMWBStageReg XLXI_60 (.clk(clk), 
                           .MemAltIn(RegData1[63:0]), 
                           .RTypeMEM(XLXN_185), 
@@ -148,15 +141,11 @@ module PipelinedDatapath(clk,
                      .S0(XLXN_201), 
                      .O(XLXN_244[63:0]));
    VCC XLXI_66 (.P(XLXN_65));
-   m2_1_64b XLXI_67 (.D0(XLXN_184[63:0]), 
-                     .D1(PCMux0[63:0]), 
-                     .S0(XLXN_89), 
-                     .O(XLXN_209[63:0]));
    m2_1_64b XLXI_68 (.D0(XLXN_222[63:0]), 
                      .D1(XLXN_221[63:0]), 
                      .S0(XLXN_223), 
                      .O(XLXN_187[63:0]));
-   InstructionMem XLXI_69 (.addr(InstAddr[7:0]), 
+   InstructionMem XLXI_69 (.addr(PC[7:0]), 
                            .clk(clk), 
                            .din(InstData[31:0]), 
                            .we(wea), 
@@ -166,12 +155,39 @@ module PipelinedDatapath(clk,
                          .clkb(clk), 
                          .dina(XLXN_50[63:0]), 
                          .ena(XLXN_65), 
-                         .gpu_alu_result_in(), 
-                         .gpu_mem_read_in(), 
-                         .gpu_mem_write_in(), 
-                         .gpu_rs2_data_in(), 
+                         .gpu_alu_result_in(gpu_alu_result_in[63:0]), 
+                         .gpu_mem_read_in(gpu_mem_read_in), 
+                         .gpu_mem_write_in(gpu_mem_write_in), 
+                         .gpu_rs2_data_in(gpu_rs2_data_in[63:0]), 
                          .wea(XLXN_233), 
                          .douta(XLXN_245[63:0]), 
-                         .gpu_addr_out(), 
-                         .gpu_mem_read_data());
+                         .gpu_addr_out(gpu_addr_out[11:0]), 
+                         .gpu_mem_read_data(gpu_mem_read_data[63:0]));
+   IDEXReg XLXI_71 (.ALUCtrlID(InstID[5:0]), 
+                    .ALUOpEX(XLXN_201), 
+                    .ALUOpID(XLXN_269), 
+                    .clk(clk), 
+                    .PCI(XLXN_82[63:0]), 
+                    .REG1I(XLXN_16[63:0]), 
+                    .REG2I(XLXN_15[63:0]), 
+                    .RTypeEX(XLXN_192), 
+                    .RTypeID(XLXN_269), 
+                    .SignExtID(XLXN_127[31:0]), 
+                    .WMEI(InstID[31]), 
+                    .WREG1I(InstID[29:28]), 
+                    .WREI(InstID[30]), 
+                    .ZeroID(XLXN_83), 
+                    .ALUCtrlEX(ALUOP[5:0]), 
+                    .PCO(XLXN_184[63:0]), 
+                    .REG1O(XLXN_5[63:0]), 
+                    .REG2O(XLXN_180[63:0]), 
+                    .SignExtEX(ALUnoop[31:0]), 
+                    .WMEO(XLXN_7), 
+                    .WREG1O(XLXN_3[1:0]), 
+                    .WREO(XLXN_250), 
+                    .ZeroEX(XLXN_267));
+   AND2 XLXI_75 (.I0(XLXN_269), 
+                 .I1(XLXN_267), 
+                 .O(branch));
+   GND XLXI_76 (.G(XLXN_269));
 endmodule

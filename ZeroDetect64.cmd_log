@@ -3,3 +3,5 @@ sch2verilog -intstyle ise -family virtex2p   -w "Z:/VM_shared_folder/EE533Lab6/P
 sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/ZeroDetect64.sch" ZeroDetect64.vf
 sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/student/My Documents/EE533Lab6/PipelinedDatapath/ZeroDetect64.sch" ZeroDetect64.vf
 sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ZeroDetect64.sch" ZeroDetect64.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ZeroDetect64.sch" ZeroDetect64.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ZeroDetect64.sch" ZeroDetect64.vf

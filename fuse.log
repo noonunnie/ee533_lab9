@@ -121,13 +121,13 @@ Restoring Verilog parse-tree unisims_ver.MUXCY from
 c:/xilinx/10.1/ise/verilog/hdp/nt/unisims_ver/unisims_ver.sdbl
 Restoring Verilog parse-tree xilinxcorelib_ver.BLKMEMSP_V6_2 from
 c:/xilinx/10.1/ise/verilog/hdp/nt/xilinxcorelib_ver/xilinxcorelib_ver.sdbl
-WARNING:HDLCompiler:559 - "PipelinedDatapath.vf" Line 110. Instantiating unknown
+WARNING:HDLCompiler:559 - "PipelinedDatapath.vf" Line 166. Instantiating unknown
    module IDEXReg
-WARNING:HDLCompiler:1016 - "PipelinedDatapath.vf" Line 95. Port PCI is not
+WARNING:HDLCompiler:1016 - "PipelinedDatapath.vf" Line 111. Port PCI is not
    connected to this instance
 Completed static elaboration
 Fuse Memory Usage: 55176 Kb
-Fuse CPU Usage: 2749 ms
+Fuse CPU Usage: 2733 ms
 Compiling module glbl
 Compiling module reg64
 Compiling module INV
@@ -215,4 +215,4 @@ Compiling module PipelineDatapath_tb
 Compiled 84 Verilog Units
 Built simulation executable PipelineDatapath_tb_isim_beh.exe
 Fuse Memory Usage: 56460 Kb
-Fuse CPU Usage: 5046 ms
+Fuse CPU Usage: 4031 ms
