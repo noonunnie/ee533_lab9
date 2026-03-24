@@ -1,0 +1,43 @@
+Command line:
+   ./PCThreaded4_tb_isim_beh.exe
+     -intstyle  ise
+     -ipchost  localhost
+     -ipcport  1066
+
+Mon Mar 23 20:26:55 2026
+
+Total Line Count : 3459
+
+ Elaboration Time: 0.375 sec
+
+ Current Memory Usage: 191.762 Meg
+
+ Total Signals          : 52979
+ Total Nets             : 12759
+ Total Signal Drivers   : 11107
+ Total Blocks           : 10792
+ Total Primitive Blocks : 8926
+ Total Processes        : 11896
+ Total Traceable Variables  : 806
+ Total Scalar Nets and Variables : 14068
+ntrace select -o on -n /PCThreaded4_tb/clk 
+ntrace select -o on -n /PCThreaded4_tb/PC 
+ntrace select -o on -n /PCThreaded4_tb/Br 
+ntrace select -o on -n /PCThreaded4_tb/BrAddr 
+ntrace select -o on -n /PCThreaded4_tb/rst 
+ntrace select -o on -n /PCThreaded4_tb/thread 
+ntrace select -o on -n /PCThreaded4_tb/UUT/XLXN_1 
+ntrace select -o on -n /PCThreaded4_tb/UUT/XLXN_2 
+ntrace select -o on -n /PCThreaded4_tb/UUT/XLXN_3 
+ntrace select -o on -n /PCThreaded4_tb/UUT/XLXN_4 
+ntrace select -o on -n /PCThreaded4_tb/UUT/PC1 
+ntrace select -o on -n /PCThreaded4_tb/UUT/PC0 
+ntrace select -o on -n /PCThreaded4_tb/UUT/PC2 
+ntrace start 
+isimrun 1000 ns 
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+restart
+isimrun 4000 ns 
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.

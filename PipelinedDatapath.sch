@@ -52,7 +52,6 @@ BEGIN SCHEMATIC
         SIGNAL RegData(5:0)
         SIGNAL XLXN_50(63:0)
         SIGNAL XLXN_250
-        SIGNAL rst
         SIGNAL PC(63:0)
         SIGNAL PC(7:0)
         SIGNAL gpu_mem_read_in
@@ -65,16 +64,19 @@ BEGIN SCHEMATIC
         SIGNAL XLXN_267
         SIGNAL branch
         SIGNAL XLXN_269
+        SIGNAL rst
+        SIGNAL Thread(1:0)
         PORT Input clk
         PORT Input wea
         PORT Input InstData(31:0)
-        PORT Input rst
         PORT Input gpu_mem_read_in
         PORT Input gpu_mem_write_in
         PORT Input gpu_alu_result_in(63:0)
         PORT Input gpu_rs2_data_in(63:0)
         PORT Output gpu_mem_read_data(63:0)
         PORT Output gpu_addr_out(11:0)
+        PORT Input rst
+        PORT Input Thread(1:0)
         BEGIN BLOCKDEF reg_file
             TIMESTAMP 2026 2 14 5 43 52
             LINE N 64 64 64 64 
@@ -91,17 +93,6 @@ BEGIN SCHEMATIC
             RECTANGLE N 320 116 320 140 
             LINE N 320 128 320 128 
             RECTANGLE N 64 0 320 400 
-        END BLOCKDEF
-        BEGIN BLOCKDEF ProgCount
-            TIMESTAMP 2026 3 22 0 46 37
-            RECTANGLE N 320 20 384 44 
-            LINE N 320 32 384 32 
-            RECTANGLE N 64 -128 320 64 
-            LINE N 64 -96 0 -96 
-            LINE N 0 -64 64 -64 
-            LINE N 0 -32 64 -32 
-            LINE N 0 32 64 32 
-            RECTANGLE N 0 20 64 44 
         END BLOCKDEF
         BEGIN BLOCKDEF IFIDReg
             TIMESTAMP 2026 2 22 10 31 47
@@ -304,6 +295,19 @@ BEGIN SCHEMATIC
             LINE N 64 -64 64 -80 
             LINE N 64 -128 64 -96 
         END BLOCKDEF
+        BEGIN BLOCKDEF PCThreaded4
+            TIMESTAMP 2026 3 24 4 38 53
+            RECTANGLE N 64 -320 320 0 
+            RECTANGLE N 0 -300 64 -276 
+            LINE N 64 -288 0 -288 
+            LINE N 64 -224 0 -224 
+            LINE N 64 -160 0 -160 
+            LINE N 64 -96 0 -96 
+            RECTANGLE N 0 -44 64 -20 
+            LINE N 64 -32 0 -32 
+            RECTANGLE N 320 -300 384 -276 
+            LINE N 320 -288 384 -288 
+        END BLOCKDEF
         BEGIN BLOCK XLXI_40 IFIDReg
             PIN clk clk
             PIN Inst(31:0) InstIF(31:0)
@@ -388,13 +392,6 @@ BEGIN SCHEMATIC
         BEGIN BLOCK XLXI_66 vcc
             PIN P XLXN_65
         END BLOCK
-        BEGIN BLOCK XLXI_39 ProgCount
-            PIN ProgCounter(63:0) PC(63:0)
-            PIN clk clk
-            PIN rst rst
-            PIN Br branch
-            PIN BrAddr(63:0) XLXN_184(63:0)
-        END BLOCK
         BEGIN BLOCK XLXI_70 big_data_mem
             PIN wea XLXN_233
             PIN ena XLXN_65
@@ -445,6 +442,14 @@ BEGIN SCHEMATIC
         END BLOCK
         BEGIN BLOCK XLXI_77 gnd
             PIN G XLXN_265
+        END BLOCK
+        BEGIN BLOCK XLXI_78 PCThreaded4
+            PIN thread(1:0) Thread(1:0)
+            PIN clk clk
+            PIN rst rst
+            PIN Br branch
+            PIN BrAddr(63:0) XLXN_184(63:0)
+            PIN PC(63:0) PC(63:0)
         END BLOCK
     END NETLIST
     BEGIN SHEET 1 5440 3520
@@ -727,17 +732,12 @@ BEGIN SCHEMATIC
             WIRE 3072 2128 3568 2128
         END BRANCH
         BEGIN BRANCH XLXN_184(63:0)
-            WIRE 240 288 240 736
-            WIRE 240 736 336 736
             WIRE 240 288 2624 288
             WIRE 2624 288 2624 1280
+            WIRE 240 288 240 784
+            WIRE 240 784 368 784
             WIRE 2608 1280 2624 1280
         END BRANCH
-        BEGIN BRANCH rst
-            WIRE 144 640 336 640
-        END BRANCH
-        BEGIN INSTANCE XLXI_39 336 704 R0
-        END INSTANCE
         BEGIN BRANCH clk
             WIRE 144 3200 176 3200
             WIRE 176 3200 1008 3200
@@ -746,8 +746,9 @@ BEGIN SCHEMATIC
             WIRE 2448 3200 3600 3200
             WIRE 3600 3200 3936 3200
             WIRE 3936 3200 4784 3200
-            WIRE 176 608 336 608
-            WIRE 176 608 176 2496
+            WIRE 176 592 368 592
+            WIRE 176 592 176 656
+            WIRE 176 656 176 2496
             WIRE 176 2496 304 2496
             WIRE 176 2496 176 3200
             WIRE 1008 3088 1008 3200
@@ -763,13 +764,11 @@ BEGIN SCHEMATIC
             WIRE 3936 2224 3936 3200
             WIRE 4784 3072 4784 3200
         END BRANCH
-        IOMARKER 144 640 rst R180 28
         BEGIN BRANCH PC(63:0)
-            WIRE 720 736 784 736
-            WIRE 784 528 784 736
+            WIRE 752 528 784 528
             WIRE 784 528 864 528
-            BEGIN DISPLAY 784 736 ATTR Name
-                ALIGNMENT SOFT-TCENTER
+            BEGIN DISPLAY 784 528 ATTR Name
+                ALIGNMENT SOFT-BCENTER
             END DISPLAY
         END BRANCH
         BEGIN BRANCH PC(7:0)
@@ -829,10 +828,10 @@ BEGIN SCHEMATIC
             WIRE 2720 768 2848 768
         END BRANCH
         BEGIN BRANCH branch
-            WIRE 256 256 256 672
-            WIRE 256 672 336 672
             WIRE 256 256 3168 256
             WIRE 3168 256 3168 800
+            WIRE 256 256 256 720
+            WIRE 256 720 368 720
             WIRE 3104 800 3168 800
         END BRANCH
         BEGIN DISPLAY 2132 756 TEXT "Put through stage reg!"
@@ -852,5 +851,15 @@ BEGIN SCHEMATIC
             FONT 24 "Arial"
         END DISPLAY
         INSTANCE XLXI_77 2944 3408 R0
+        BEGIN INSTANCE XLXI_78 368 816 R0
+        END INSTANCE
+        BEGIN BRANCH rst
+            WIRE 144 656 368 656
+        END BRANCH
+        IOMARKER 144 656 rst R180 28
+        BEGIN BRANCH Thread(1:0)
+            WIRE 176 528 368 528
+        END BRANCH
+        IOMARKER 176 528 Thread(1:0) R180 28
     END SHEET
 END SCHEMATIC
