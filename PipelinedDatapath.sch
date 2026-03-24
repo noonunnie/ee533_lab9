@@ -285,11 +285,6 @@ BEGIN SCHEMATIC
             LINE N 320 -608 384 -608 
             RECTANGLE N 64 -640 320 256 
         END BLOCKDEF
-        BEGIN BLOCKDEF constant
-            TIMESTAMP 2006 1 1 10 10 10
-            RECTANGLE N 0 0 112 64 
-            LINE N 144 32 112 32 
-        END BLOCKDEF
         BEGIN BLOCKDEF and2
             TIMESTAMP 2000 1 1 10 10 10
             LINE N 0 -64 64 -64 
@@ -440,14 +435,6 @@ BEGIN SCHEMATIC
             PIN RTypeID XLXN_269
             PIN RTypeEX XLXN_192
         END BLOCK
-        BEGIN BLOCK XLXI_73 constant
-            BEGIN ATTR CValue "0"
-                DELETE all:1 sym:0
-                EDITNAME all:1 sch:0
-                VALUETYPE BitVector 32 Hexadecimal
-            END ATTR
-            PIN O XLXN_265
-        END BLOCK
         BEGIN BLOCK XLXI_75 and2
             PIN I0 XLXN_269
             PIN I1 XLXN_267
@@ -455,6 +442,9 @@ BEGIN SCHEMATIC
         END BLOCK
         BEGIN BLOCK XLXI_76 gnd
             PIN G XLXN_269
+        END BLOCK
+        BEGIN BLOCK XLXI_77 gnd
+            PIN G XLXN_265
         END BLOCK
     END NETLIST
     BEGIN SHEET 1 5440 3520
@@ -829,11 +819,9 @@ BEGIN SCHEMATIC
         IOMARKER 4784 3248 gpu_mem_read_data(63:0) R0 28
         IOMARKER 4784 3296 gpu_addr_out(11:0) R0 28
         BEGIN BRANCH XLXN_265
+            WIRE 3008 2736 3008 3280
             WIRE 3008 2736 3088 2736
-            WIRE 3008 2736 3008 3104
         END BRANCH
-        BEGIN INSTANCE XLXI_73 2864 3072 R0
-        END INSTANCE
         INSTANCE XLXI_75 2848 896 R0
         BEGIN BRANCH XLXN_267
             WIRE 2608 1408 2720 1408
@@ -863,5 +851,6 @@ BEGIN SCHEMATIC
         BEGIN DISPLAY 1732 3432 TEXT "Placeholder control signal, make sure nothing is connected to this!"
             FONT 24 "Arial"
         END DISPLAY
+        INSTANCE XLXI_77 2944 3408 R0
     END SHEET
 END SCHEMATIC

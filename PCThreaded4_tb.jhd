@@ -1,0 +1,3 @@
+MODULE PCThreaded4_tb
+SUBMODULE PCThreaded4
+INSTANCE UUT

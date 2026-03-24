@@ -1,19 +1,11 @@
 C:/Xilinx/10.1/ISE/verilog/src/glbl.v
-//vmware-host/Shared Folders/shared/SharedProjects/ee533_lab9/big_data_mem.v
-K:/IP0_K.14/env/Databases/ip/export/rtf/verilog/src/XilinxCoreLib/BLKMEMSP_V6_2.v
-N:/K.31/rtf/verilog/src/unisims/MUXCY.v
-N:/K.31/rtf/verilog/src/unisims/MUXCY_L.v
-//vmware-host/Shared Folders/shared/SharedProjects/ee533_lab9/SignExt.v
-//vmware-host/Shared Folders/shared/SharedProjects/ee533_lab9/reg2.v
-N:/K.31/rtf/verilog/src/unisims/FDCE.v
-N:/K.31/rtf/verilog/src/unisims/FD.v
+//vmware-host/Shared Folders/shared/SharedProjects/ee533_lab9/m4_1_64b.v
+N:/K.31/rtf/verilog/src/unisims/FDE.v
 //vmware-host/Shared Folders/shared/SharedProjects/ee533_lab9/m2_1_64b.v
+//vmware-host/Shared Folders/shared/SharedProjects/ee533_lab9/reg64.v
 N:/K.31/rtf/verilog/src/unisims/GND.v
 N:/K.31/rtf/verilog/src/unisims/MUXF6.v
 N:/K.31/rtf/verilog/src/unisims/MUXF5_L.v
 N:/K.31/rtf/verilog/src/unisims/VCC.v
-//vmware-host/Shared Folders/shared/SharedProjects/ee533_lab9/ProgCount.vf
-//vmware-host/Shared Folders/shared/SharedProjects/ee533_lab9/m4_64b.v
-//vmware-host/Shared Folders/shared/SharedProjects/ee533_lab9/reg64.v
-//vmware-host/Shared Folders/shared/SharedProjects/ee533_lab9/PipelinedDatapath.vf
-//vmware-host/Shared Folders/shared/SharedProjects/ee533_lab9/PipelineDatapath_tb.tfw
+//vmware-host/Shared Folders/shared/SharedProjects/ee533_lab9/ProgCount_threaded.vf
+//vmware-host/Shared Folders/shared/SharedProjects/ee533_lab9/PCThreaded4_tb.tfw

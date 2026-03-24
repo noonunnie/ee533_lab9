@@ -6,3 +6,4 @@ sch2verilog -intstyle ise -family virtex2p   -w "C:/Documents and Settings/stude
 sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ZeroDetect16.sch" ZeroDetect16.vf
 sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ZeroDetect16.sch" ZeroDetect16.vf
 sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ZeroDetect16.sch" ZeroDetect16.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ZeroDetect16.sch" ZeroDetect16.vf

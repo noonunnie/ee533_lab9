@@ -1,0 +1,2 @@
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ProgCount_threaded.sch" ProgCount_threaded.vf
+sch2verilog -intstyle ise -family virtex2p   -w "Z:/shared/SharedProjects/ee533_lab9/ProgCount_threaded.sch" ProgCount_threaded.vf

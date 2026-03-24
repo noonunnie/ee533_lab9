@@ -7,7 +7,7 @@
 // \   \   \/     Version : 10.1
 //  \   \         Application : sch2verilog
 //  /   /         Filename : PipelinedDatapath.vf
-// /___/   /\     Timestamp : 03/22/2026 17:21:37
+// /___/   /\     Timestamp : 03/23/2026 19:42:10
 // \   \  /  \ 
 //  \___\/\___\ 
 //
@@ -82,7 +82,6 @@ module PipelinedDatapath(clk,
    wire XLXN_267;
    wire XLXN_269;
    
-   assign XLXN_265 = 1;
    reg_file XLXI_13 (.clk(clk), 
                      .r0addr(InstID[22:21]), 
                      .r1addr({InstID[15], InstID[16]}), 
@@ -190,4 +189,5 @@ module PipelinedDatapath(clk,
                  .I1(XLXN_267), 
                  .O(branch));
    GND XLXI_76 (.G(XLXN_269));
+   GND XLXI_77 (.G(XLXN_265));
 endmodule

@@ -1,0 +1,12 @@
+[Inputs]
+=D0[63:0]=
+=D1[63:0]=
+=D2[63:0]=
+=D3[63:0]=
+=Sel[1:0]=
+[Outputs]
+=O[63:0]=
+[BiDir]
+[ATTRIBUTES]
+VeriModel m4_1_64b
+
