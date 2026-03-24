@@ -1,0 +1,70 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2008 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 10.1
+//  \   \         Application : sch2verilog
+//  /   /         Filename : MEMWBStageReg.vf
+// /___/   /\     Timestamp : 03/23/2026 19:42:04
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: C:\Xilinx\10.1\ISE\bin\nt\unwrapped\sch2verilog.exe -intstyle ise -family virtex2p -w Z:/shared/SharedProjects/ee533_lab9/MEMWBStageReg.sch MEMWBStageReg.vf
+//Design Name: MEMWBStageReg
+//Device: virtex2p
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module MEMWBStageReg(clk, 
+                     MemAltIn, 
+                     RTypeMEM, 
+                     WDataI, 
+                     WREG1I, 
+                     WREI, 
+                     RTypeWB, 
+                     WBAltOut, 
+                     WDataO, 
+                     WREG1O, 
+                     WREO);
+
+    input clk;
+    input [63:0] MemAltIn;
+    input RTypeMEM;
+    input [63:0] WDataI;
+    input [1:0] WREG1I;
+    input WREI;
+   output RTypeWB;
+   output [63:0] WBAltOut;
+   output [63:0] WDataO;
+   output [1:0] WREG1O;
+   output WREO;
+   
+   wire XLXN_18;
+   
+   FD XLXI_5 (.C(clk), 
+              .D(WREI), 
+              .Q(WREO));
+   defparam XLXI_5.INIT = 1'b0;
+   VCC XLXI_7 (.P(XLXN_18));
+   reg64 XLXI_9 (.clk(clk), 
+                 .data_in(WDataI[63:0]), 
+                 .en(XLXN_18), 
+                 .data_out(WDataO[63:0]));
+   reg2 XLXI_11 (.clk(XLXN_18), 
+                 .data_in(WREG1I[1:0]), 
+                 .en(clk), 
+                 .data_out(WREG1O[1:0]));
+   reg64 XLXI_12 (.clk(clk), 
+                  .data_in(MemAltIn[63:0]), 
+                  .en(XLXN_18), 
+                  .data_out(WBAltOut[63:0]));
+   FD XLXI_32 (.C(clk), 
+               .D(RTypeMEM), 
+               .Q(RTypeWB));
+   defparam XLXI_32.INIT = 1'b0;
+endmodule

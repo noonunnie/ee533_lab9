@@ -1,0 +1,47 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 1995-2008 Xilinx, Inc.  All rights reserved.
+////////////////////////////////////////////////////////////////////////////////
+//   ____  ____ 
+//  /   /\/   / 
+// /___/  \  /    Vendor: Xilinx 
+// \   \   \/     Version : 10.1
+//  \   \         Application : sch2verilog
+//  /   /         Filename : ZeroDetect64.vf
+// /___/   /\     Timestamp : 03/23/2026 19:42:21
+// \   \  /  \ 
+//  \___\/\___\ 
+//
+//Command: C:\Xilinx\10.1\ISE\bin\nt\unwrapped\sch2verilog.exe -intstyle ise -family virtex2p -w Z:/shared/SharedProjects/ee533_lab9/ZeroDetect64.sch ZeroDetect64.vf
+//Design Name: ZeroDetect64
+//Device: virtex2p
+//Purpose:
+//    This verilog netlist is translated from an ECS schematic.It can be 
+//    synthesized and simulated, but it should not be modified. 
+//
+`timescale 1ns / 1ps
+
+module ZeroDetect64(din, 
+                    dout);
+
+    input [63:0] din;
+   output dout;
+   
+   wire XLXN_7;
+   wire XLXN_8;
+   wire XLXN_9;
+   wire XLXN_10;
+   
+   NOR4 XLXI_9 (.I0(XLXN_10), 
+                .I1(XLXN_8), 
+                .I2(XLXN_7), 
+                .I3(XLXN_9), 
+                .O(dout));
+   ZeroDetect16 XLXI_11 (.din(din[63:48]), 
+                         .dout(XLXN_9));
+   ZeroDetect16 XLXI_12 (.din(din[47:32]), 
+                         .dout(XLXN_7));
+   ZeroDetect16 XLXI_13 (.din(din[31:16]), 
+                         .dout(XLXN_8));
+   ZeroDetect16 XLXI_14 (.din(din[15:0]), 
+                         .dout(XLXN_10));
+endmodule
