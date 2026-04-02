@@ -21,7 +21,6 @@ BEGIN SCHEMATIC
         SIGNAL XLXN_7
         SIGNAL InstID(30)
         SIGNAL InstID(31)
-        SIGNAL XLXN_82(63:0)
         SIGNAL RegData1(63:0)
         SIGNAL WBWADDR(1:0)
         SIGNAL InstID(5:0)
@@ -63,9 +62,15 @@ BEGIN SCHEMATIC
         SIGNAL XLXN_265
         SIGNAL XLXN_267
         SIGNAL branch
-        SIGNAL XLXN_269
+        SIGNAL ALUOP(3)
         SIGNAL rst
         SIGNAL Thread(1:0)
+        SIGNAL XLXN_270
+        SIGNAL InstID(4)
+        SIGNAL XLXN_276(63:0)
+        SIGNAL XLXN_278(63:0)
+        SIGNAL XLXN_280(63:0)
+        SIGNAL XLXN_82(63:0)
         PORT Input clk
         PORT Input wea
         PORT Input InstData(31:0)
@@ -308,6 +313,13 @@ BEGIN SCHEMATIC
             RECTANGLE N 320 -300 384 -276 
             LINE N 320 -288 384 -288 
         END BLOCKDEF
+        BEGIN BLOCKDEF control
+            TIMESTAMP 2026 4 2 18 55 30
+            RECTANGLE N 64 -64 320 0 
+            RECTANGLE N 0 -44 64 -20 
+            LINE N 64 -32 0 -32 
+            LINE N 320 -32 384 -32 
+        END BLOCKDEF
         BEGIN BLOCK XLXI_40 IFIDReg
             PIN clk clk
             PIN Inst(31:0) InstIF(31:0)
@@ -427,18 +439,15 @@ BEGIN SCHEMATIC
             PIN WREI InstID(30)
             PIN PCI(63:0) XLXN_82(63:0)
             PIN ZeroID XLXN_83
-            PIN ALUOpID XLXN_269
+            PIN ALUOpID XLXN_270
             PIN ALUOpEX XLXN_201
-            PIN RTypeID XLXN_269
+            PIN RTypeID InstID(4)
             PIN RTypeEX XLXN_192
         END BLOCK
         BEGIN BLOCK XLXI_75 and2
-            PIN I0 XLXN_269
+            PIN I0 ALUOP(3)
             PIN I1 XLXN_267
             PIN O branch
-        END BLOCK
-        BEGIN BLOCK XLXI_76 gnd
-            PIN G XLXN_269
         END BLOCK
         BEGIN BLOCK XLXI_77 gnd
             PIN G XLXN_265
@@ -450,6 +459,10 @@ BEGIN SCHEMATIC
             PIN Br branch
             PIN BrAddr(63:0) XLXN_184(63:0)
             PIN PC(63:0) PC(63:0)
+        END BLOCK
+        BEGIN BLOCK XLXI_79 control
+            PIN InstID(5:0) InstID(5:0)
+            PIN ALUSrcID XLXN_270
         END BLOCK
     END NETLIST
     BEGIN SHEET 1 5440 3520
@@ -511,14 +524,14 @@ BEGIN SCHEMATIC
                 ALIGNMENT SOFT-RIGHT
             END DISPLAY
         END BRANCH
-        BEGIN BRANCH XLXN_82(63:0)
-            WIRE 1152 528 1168 528
-            WIRE 1168 528 1168 1280
-            WIRE 1168 1280 2288 1280
-        END BRANCH
         BEGIN BRANCH InstID(5:0)
-            WIRE 2256 2800 2288 2800
-            BEGIN DISPLAY 2256 2800 ATTR Name
+            WIRE 1840 1648 1840 1840
+            WIRE 1840 1840 2224 1840
+            WIRE 2224 1840 2224 2800
+            WIRE 2224 2800 2288 2800
+            WIRE 1840 1648 1856 1648
+            WIRE 2176 2800 2224 2800
+            BEGIN DISPLAY 2176 2800 ATTR Name
                 ALIGNMENT SOFT-RIGHT
             END DISPLAY
         END BRANCH
@@ -556,15 +569,6 @@ BEGIN SCHEMATIC
         END INSTANCE
         BEGIN INSTANCE XLXI_56 1616 3088 R0
         END INSTANCE
-        BEGIN BRANCH XLXN_16(63:0)
-            WIRE 1904 2368 1984 2368
-            WIRE 1984 2368 2288 2368
-            WIRE 1984 1808 1984 2368
-        END BRANCH
-        BEGIN BRANCH XLXN_83
-            WIRE 1984 1408 1984 1424
-            WIRE 1984 1408 2288 1408
-        END BRANCH
         BEGIN BRANCH ALUOP(5:0)
             WIRE 2608 2800 2640 2800
             BEGIN DISPLAY 2640 2800 ATTR Name
@@ -587,8 +591,6 @@ BEGIN SCHEMATIC
                 ALIGNMENT SOFT-RIGHT
             END DISPLAY
         END BRANCH
-        BEGIN INSTANCE XLXI_62 1952 1808 R270
-        END INSTANCE
         BEGIN BRANCH XLXN_3(1:0)
             WIRE 2608 2976 3568 2976
         END BRANCH
@@ -732,11 +734,11 @@ BEGIN SCHEMATIC
             WIRE 3072 2128 3568 2128
         END BRANCH
         BEGIN BRANCH XLXN_184(63:0)
-            WIRE 240 288 2624 288
-            WIRE 2624 288 2624 1280
             WIRE 240 288 240 784
             WIRE 240 784 368 784
-            WIRE 2608 1280 2624 1280
+            WIRE 240 288 2672 288
+            WIRE 2672 288 2672 1280
+            WIRE 2608 1280 2672 1280
         END BRANCH
         BEGIN BRANCH clk
             WIRE 144 3200 176 3200
@@ -747,8 +749,7 @@ BEGIN SCHEMATIC
             WIRE 3600 3200 3936 3200
             WIRE 3936 3200 4784 3200
             WIRE 176 592 368 592
-            WIRE 176 592 176 656
-            WIRE 176 656 176 2496
+            WIRE 176 592 176 2496
             WIRE 176 2496 304 2496
             WIRE 176 2496 176 3200
             WIRE 1008 3088 1008 3200
@@ -821,33 +822,14 @@ BEGIN SCHEMATIC
             WIRE 3008 2736 3008 3280
             WIRE 3008 2736 3088 2736
         END BRANCH
-        INSTANCE XLXI_75 2848 896 R0
-        BEGIN BRANCH XLXN_267
-            WIRE 2608 1408 2720 1408
-            WIRE 2720 768 2720 1408
-            WIRE 2720 768 2848 768
-        END BRANCH
         BEGIN BRANCH branch
-            WIRE 256 256 3168 256
-            WIRE 3168 256 3168 800
-            WIRE 256 256 256 720
-            WIRE 256 720 368 720
-            WIRE 3104 800 3168 800
+            WIRE 352 272 352 720
+            WIRE 352 720 368 720
+            WIRE 352 272 3232 272
+            WIRE 3232 272 3232 800
+            WIRE 3168 800 3232 800
         END BRANCH
         BEGIN DISPLAY 2132 756 TEXT "Put through stage reg!"
-            FONT 24 "Arial"
-        END DISPLAY
-        BEGIN BRANCH XLXN_269
-            WIRE 1664 3344 2032 3344
-            WIRE 2032 832 2848 832
-            WIRE 2032 832 2032 1648
-            WIRE 2032 1648 2288 1648
-            WIRE 2032 1648 2032 1728
-            WIRE 2032 1728 2032 3344
-            WIRE 2032 1728 2288 1728
-        END BRANCH
-        INSTANCE XLXI_76 1600 3472 R0
-        BEGIN DISPLAY 1732 3432 TEXT "Placeholder control signal, make sure nothing is connected to this!"
             FONT 24 "Arial"
         END DISPLAY
         INSTANCE XLXI_77 2944 3408 R0
@@ -861,5 +843,46 @@ BEGIN SCHEMATIC
             WIRE 176 528 368 528
         END BRANCH
         IOMARKER 176 528 Thread(1:0) R180 28
+        INSTANCE XLXI_75 2912 896 R0
+        BEGIN BRANCH XLXN_267
+            WIRE 2608 1408 2624 1408
+            WIRE 2624 768 2912 768
+            WIRE 2624 768 2624 1408
+        END BRANCH
+        BEGIN BRANCH ALUOP(3)
+            WIRE 2848 832 2912 832
+            BEGIN DISPLAY 2848 832 ATTR Name
+                ALIGNMENT SOFT-RIGHT
+            END DISPLAY
+        END BRANCH
+        BEGIN BRANCH XLXN_270
+            WIRE 2224 1648 2240 1648
+            WIRE 2240 1648 2288 1648
+        END BRANCH
+        BEGIN BRANCH InstID(4)
+            WIRE 2224 1728 2288 1728
+            BEGIN DISPLAY 2224 1728 ATTR Name
+                ALIGNMENT SOFT-RIGHT
+            END DISPLAY
+        END BRANCH
+        BEGIN BRANCH XLXN_16(63:0)
+            WIRE 1792 1792 1792 2080
+            WIRE 1792 2080 1984 2080
+            WIRE 1984 2080 1984 2368
+            WIRE 1984 2368 2288 2368
+            WIRE 1904 2368 1984 2368
+        END BRANCH
+        BEGIN BRANCH XLXN_82(63:0)
+            WIRE 1152 528 1168 528
+            WIRE 1168 528 1168 1280
+            WIRE 1168 1280 2288 1280
+        END BRANCH
+        BEGIN BRANCH XLXN_83
+            WIRE 1792 1408 2288 1408
+        END BRANCH
+        BEGIN INSTANCE XLXI_62 1760 1792 R270
+        END INSTANCE
+        BEGIN INSTANCE XLXI_79 1856 1680 R0
+        END INSTANCE
     END SHEET
 END SCHEMATIC

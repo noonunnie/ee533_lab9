@@ -1,0 +1,8 @@
+[Inputs]
+=InstID[5:0]=
+[Outputs]
+ALUSrcID
+[BiDir]
+[ATTRIBUTES]
+VeriModel control
+

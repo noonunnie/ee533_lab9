@@ -836,7 +836,6 @@ proc restore { { project_dir "" } } {
   } "A problem occured while restoring project settings."
 
   set user_files { 
-      "../Mem_interface.v" 
       "ALU1Bit.sch" 
       "ALU64Bit.sch" 
       "ALU64Bit_tb.tbw" 
@@ -862,6 +861,7 @@ proc restore { { project_dir "" } } {
       "ZeroDetect64.sch" 
       "big_data_mem.v" 
       "big_data_mem_tb.tbw" 
+      "control.v" 
       "decode2b.sch" 
       "m2_1_64b.v" 
       "m4_1_64b.v" 
