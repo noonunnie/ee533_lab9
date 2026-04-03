@@ -65,8 +65,8 @@ BEGIN SCHEMATIC
         SIGNAL ALUOP(3)
         SIGNAL rst
         SIGNAL Thread(1:0)
-        SIGNAL XLXN_270
-        SIGNAL InstID(4)
+        SIGNAL InstID(27)
+        SIGNAL InstID(28)
         SIGNAL XLXN_276(63:0)
         SIGNAL XLXN_278(63:0)
         SIGNAL XLXN_280(63:0)
@@ -313,13 +313,6 @@ BEGIN SCHEMATIC
             RECTANGLE N 320 -300 384 -276 
             LINE N 320 -288 384 -288 
         END BLOCKDEF
-        BEGIN BLOCKDEF control
-            TIMESTAMP 2026 4 2 18 55 30
-            RECTANGLE N 64 -64 320 0 
-            RECTANGLE N 0 -44 64 -20 
-            LINE N 64 -32 0 -32 
-            LINE N 320 -32 384 -32 
-        END BLOCKDEF
         BEGIN BLOCK XLXI_40 IFIDReg
             PIN clk clk
             PIN Inst(31:0) InstIF(31:0)
@@ -439,9 +432,9 @@ BEGIN SCHEMATIC
             PIN WREI InstID(30)
             PIN PCI(63:0) XLXN_82(63:0)
             PIN ZeroID XLXN_83
-            PIN ALUOpID XLXN_270
+            PIN ALUOpID InstID(27)
             PIN ALUOpEX XLXN_201
-            PIN RTypeID InstID(4)
+            PIN RTypeID InstID(28)
             PIN RTypeEX XLXN_192
         END BLOCK
         BEGIN BLOCK XLXI_75 and2
@@ -459,10 +452,6 @@ BEGIN SCHEMATIC
             PIN Br branch
             PIN BrAddr(63:0) XLXN_184(63:0)
             PIN PC(63:0) PC(63:0)
-        END BLOCK
-        BEGIN BLOCK XLXI_79 control
-            PIN InstID(5:0) InstID(5:0)
-            PIN ALUSrcID XLXN_270
         END BLOCK
     END NETLIST
     BEGIN SHEET 1 5440 3520
@@ -514,24 +503,13 @@ BEGIN SCHEMATIC
         BEGIN INSTANCE XLXI_40 816 528 R0
         END INSTANCE
         BEGIN BRANCH XLXN_7
-            WIRE 2608 1024 3088 1024
-            WIRE 3088 1024 3088 1648
-            WIRE 3088 1648 3568 1648
+            WIRE 2608 1024 3216 1024
+            WIRE 3216 1024 3216 1648
+            WIRE 3216 1648 3568 1648
         END BRANCH
         BEGIN BRANCH InstID(30)
             WIRE 2192 1088 2288 1088
             BEGIN DISPLAY 2192 1088 ATTR Name
-                ALIGNMENT SOFT-RIGHT
-            END DISPLAY
-        END BRANCH
-        BEGIN BRANCH InstID(5:0)
-            WIRE 1840 1648 1840 1840
-            WIRE 1840 1840 2224 1840
-            WIRE 2224 1840 2224 2800
-            WIRE 2224 2800 2288 2800
-            WIRE 1840 1648 1856 1648
-            WIRE 2176 2800 2224 2800
-            BEGIN DISPLAY 2176 2800 ATTR Name
                 ALIGNMENT SOFT-RIGHT
             END DISPLAY
         END BRANCH
@@ -553,10 +531,10 @@ BEGIN SCHEMATIC
             END DISPLAY
         END BRANCH
         BEGIN BRANCH WBWADDR(1:0)
-            WIRE 1616 528 1616 2432
-            WIRE 1616 2432 1648 2432
-            WIRE 1616 528 4960 528
-            WIRE 4960 528 4960 2944
+            WIRE 1568 512 4960 512
+            WIRE 4960 512 4960 2944
+            WIRE 1568 512 1568 2432
+            WIRE 1568 2432 1648 2432
             WIRE 4912 2944 4960 2944
         END BRANCH
         BEGIN BRANCH InstID(15:16)
@@ -606,10 +584,10 @@ BEGIN SCHEMATIC
             END DISPLAY
         END BRANCH
         BEGIN BRANCH XLXN_188
-            WIRE 1632 512 1632 2368
-            WIRE 1632 2368 1648 2368
-            WIRE 1632 512 4976 512
-            WIRE 4976 512 4976 1856
+            WIRE 1584 528 1584 2368
+            WIRE 1584 2368 1648 2368
+            WIRE 1584 528 4976 528
+            WIRE 4976 528 4976 1856
             WIRE 4912 1856 4976 1856
         END BRANCH
         BEGIN BRANCH XLXN_190(63:0)
@@ -643,9 +621,9 @@ BEGIN SCHEMATIC
             WIRE 4928 2576 4976 2576
         END BRANCH
         BEGIN BRANCH XLXN_187(63:0)
-            WIRE 1600 496 1600 2688
-            WIRE 1600 2688 1648 2688
-            WIRE 1600 496 5424 496
+            WIRE 1552 496 1552 2688
+            WIRE 1552 2688 1648 2688
+            WIRE 1552 496 5424 496
             WIRE 5424 496 5424 2576
             WIRE 5360 2576 5424 2576
         END BRANCH
@@ -734,10 +712,10 @@ BEGIN SCHEMATIC
             WIRE 3072 2128 3568 2128
         END BRANCH
         BEGIN BRANCH XLXN_184(63:0)
-            WIRE 240 288 240 784
+            WIRE 240 208 2672 208
+            WIRE 2672 208 2672 1280
+            WIRE 240 208 240 784
             WIRE 240 784 368 784
-            WIRE 240 288 2672 288
-            WIRE 2672 288 2672 1280
             WIRE 2608 1280 2672 1280
         END BRANCH
         BEGIN BRANCH clk
@@ -745,8 +723,8 @@ BEGIN SCHEMATIC
             WIRE 176 3200 1008 3200
             WIRE 1008 3200 1344 3200
             WIRE 1344 3200 2448 3200
-            WIRE 2448 3200 3600 3200
-            WIRE 3600 3200 3936 3200
+            WIRE 2448 3200 3696 3200
+            WIRE 3696 3200 3936 3200
             WIRE 3936 3200 4784 3200
             WIRE 176 592 368 592
             WIRE 176 592 176 2496
@@ -756,9 +734,7 @@ BEGIN SCHEMATIC
             WIRE 1344 2496 1648 2496
             WIRE 1344 2496 1344 3200
             WIRE 2448 3088 2448 3200
-            WIRE 3600 3136 3696 3136
-            WIRE 3600 3136 3600 3200
-            WIRE 3696 3072 3696 3136
+            WIRE 3696 3072 3696 3200
             WIRE 3936 2032 4128 2032
             WIRE 3936 2032 3936 2224
             WIRE 3936 2224 4128 2224
@@ -823,10 +799,10 @@ BEGIN SCHEMATIC
             WIRE 3008 2736 3088 2736
         END BRANCH
         BEGIN BRANCH branch
-            WIRE 352 272 352 720
-            WIRE 352 720 368 720
-            WIRE 352 272 3232 272
-            WIRE 3232 272 3232 800
+            WIRE 304 160 304 720
+            WIRE 304 720 368 720
+            WIRE 304 160 3232 160
+            WIRE 3232 160 3232 800
             WIRE 3168 800 3232 800
         END BRANCH
         BEGIN DISPLAY 2132 756 TEXT "Put through stage reg!"
@@ -855,11 +831,13 @@ BEGIN SCHEMATIC
                 ALIGNMENT SOFT-RIGHT
             END DISPLAY
         END BRANCH
-        BEGIN BRANCH XLXN_270
-            WIRE 2224 1648 2240 1648
-            WIRE 2240 1648 2288 1648
+        BEGIN BRANCH InstID(27)
+            WIRE 2224 1648 2288 1648
+            BEGIN DISPLAY 2224 1648 ATTR Name
+                ALIGNMENT SOFT-RIGHT
+            END DISPLAY
         END BRANCH
-        BEGIN BRANCH InstID(4)
+        BEGIN BRANCH InstID(28)
             WIRE 2224 1728 2288 1728
             BEGIN DISPLAY 2224 1728 ATTR Name
                 ALIGNMENT SOFT-RIGHT
@@ -882,7 +860,12 @@ BEGIN SCHEMATIC
         END BRANCH
         BEGIN INSTANCE XLXI_62 1760 1792 R270
         END INSTANCE
-        BEGIN INSTANCE XLXI_79 1856 1680 R0
-        END INSTANCE
+        BEGIN BRANCH InstID(5:0)
+            WIRE 2176 2800 2224 2800
+            WIRE 2224 2800 2288 2800
+            BEGIN DISPLAY 2176 2800 ATTR Name
+                ALIGNMENT SOFT-RIGHT
+            END DISPLAY
+        END BRANCH
     END SHEET
 END SCHEMATIC
